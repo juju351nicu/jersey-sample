@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: jersey-sample 
