@@ -3,6 +3,8 @@ package com.example.config;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 
+import com.example.filter.ResourceFilter;
+
 import jakarta.ws.rs.ApplicationPath;
 
 /**
@@ -14,6 +16,7 @@ import jakarta.ws.rs.ApplicationPath;
 public class JerseyConfig extends ResourceConfig {
 
 	public JerseyConfig() {
+		register(ResourceFilter.class);
 		packages("com.example.resource");
 	}
 
