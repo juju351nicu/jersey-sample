@@ -24,7 +24,8 @@ public class ResourceFilter implements ContainerRequestFilter {
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		ErrorResponse response = new ErrorResponse();
 		try {
-			String path = requestContext.getUriInfo().getPath();
+			String path = requestContext.getUriInfo().getAbsolutePath().getPath();
+			System.out.println("path:" + path);
 			if (!path.contains("/rs")) {
 				System.out.println("path:" + path);
 				return;
