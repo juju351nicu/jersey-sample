@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -29,11 +30,11 @@ public class ConsumptionTaxTest {
 
 	@ParameterizedTest
 	@MethodSource("listMethodSource")
-	void applyで消費税が加算された価格が取得できる(Fixture fixture) throws Exception {
+	@DisplayName("applyで消費税が加算された価格が取得できる")
+	void test1(Fixture fixture) throws Exception {
 		ConsumptionTax sut = new ConsumptionTax(fixture.taxRate);
 		String desc = "when rate=" + fixture.taxRate + ", price=" + fixture.price;
-		System.out.println(desc);
-		assertEquals(sut.apply(fixture.price), fixture.expected);
+		assertEquals(sut.apply(fixture.price), fixture.expected, desc);
 	}
 
 	static Stream<Arguments> listMethodSource() {
