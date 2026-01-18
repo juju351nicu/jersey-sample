@@ -2,11 +2,8 @@ package com.example.demo.sample;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 /**
@@ -37,9 +34,13 @@ public class ConsumptionTaxTest {
 		assertEquals(sut.apply(fixture.price), fixture.expected, desc);
 	}
 
-	static Stream<Arguments> listMethodSource() {
-		return Stream.of(Arguments.of(new Fixture(5, 100, 105)), Arguments.of(new Fixture(5, 3000, 3150)),
-				Arguments.of(new Fixture(10, 50, 55)), Arguments.of(new Fixture(5, 50, 52)),
-				Arguments.of(new Fixture(3, 50, 51)));
+	static Fixture[] listMethodSource() {
+		return new Fixture[] { new Fixture(5, 100, 105), new Fixture(5, 3000, 3150), new Fixture(10, 50, 55),
+				new Fixture(5, 50, 52), new Fixture(3, 50, 51), };
 	}
+//	static Stream<Arguments> listMethodSource() {
+//		return Stream.of(Arguments.of(new Fixture(5, 100, 105)), Arguments.of(new Fixture(5, 3000, 3150)),
+//				Arguments.of(new Fixture(10, 50, 55)), Arguments.of(new Fixture(5, 50, 52)),
+//				Arguments.of(new Fixture(3, 50, 51)));
+//	}
 }

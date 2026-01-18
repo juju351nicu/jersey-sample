@@ -1,6 +1,5 @@
 package com.example.demo.sample;
 
-import static org.hamcrest.CoreMatchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -10,14 +9,10 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
+import org.junit.jupiter.params.provider.EnumSource;
 import com.example.demo.sample.model.ApplicationServer;
 import com.example.demo.sample.model.Database;
 
@@ -59,7 +54,8 @@ class FrameworksTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("listMethodSource")
+	@EnumSource(ApplicationServer.class)
+	@EnumSource(Database.class)
 	@DisplayName("isSupportは、表にて◯の組み合わせの場合にtrueを返す")
 	void isSupportはtrueを返す(ApplicationServer appServer, Database db) throws Exception {
 		assertTrue(isSupport(appServer, db));
@@ -68,6 +64,8 @@ class FrameworksTest {
 	}
 
 	@DisplayName("isSupportは、表にて×の組み合わせの場合にfalseを返す")
+	@EnumSource(ApplicationServer.class)
+	@EnumSource(Database.class)
 	void isSupportはfalseを返す(ApplicationServer appServer, Database db) throws Exception {
 		assertTrue(!isSupport(appServer, db));
 		String desc = ", AppServer:" + appServer + ", DB:" + db;
@@ -76,9 +74,5 @@ class FrameworksTest {
 
 	private boolean isSupport(ApplicationServer appServer, Database db) {
 		return SUPPORTS.get(appServer.toString() + "-" + db.toString());
-	}
-
-	static Stream<Arguments> listMethodSource() {
-		return Stream.of(Arguments.of(ApplicationServer.values()));
 	}
 }
