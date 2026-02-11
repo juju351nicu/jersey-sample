@@ -2,6 +2,7 @@ package com.example.demo.ch08;
 
 import static org.assertj.core.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,9 @@ class AssmeTest {
 
 	@Test
 	void assume() throws Exception {
-		assertEquals(1, 0);
+        assumingThat(1 == 0, () -> {
+            System.out.println("This only runs if ENV is 'CI'.");
+        });
 		fail("この行は実行されない");
 	}
 }
