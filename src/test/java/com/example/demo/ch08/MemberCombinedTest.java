@@ -1,22 +1,21 @@
 package com.example.demo.ch08;
 
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.EnumSource;
 
-///**
-// * リスト8.17 2つのパラメータの組み合わせテスト
-// * @author shuji.w6e
-// */
-// class MemberCombinedTest {
-//
-//    @DataPoints
-//    public static int[] AGES = { 15, 20, 25, 30 };
-//    @DataPoints
-//    public static Gender[] GENDERS = Gender.values();
-//
-//	@ParameterizedTest
-//	@MethodSource("getParams")
-//    public void canEntry(int age, Gender gender) throws Exception {
-//        System.out.println("canEntry(" + age + ", " + gender + ")");
-//    }
-//}
+/**
+ * リスト8.17 2つのパラメータの組み合わせテスト
+ * 
+ * @author shuji.w6e
+ */
+class MemberCombinedTest {
+
+	@ParameterizedTest
+	@EnumSource(value = Gender.class, names = { "MALE", "FEMALE" })
+	void canEntry(Gender gender) throws Exception {
+		int[] AGES = { 15, 20, 25, 30 };
+		for (int age : AGES) {
+			System.out.println("canEntry(" + age + ", " + gender + ")");
+		}
+	}
+}

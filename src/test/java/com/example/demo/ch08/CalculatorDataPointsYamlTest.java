@@ -2,7 +2,11 @@ package com.example.demo.ch08;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,6 +20,9 @@ import org.yaml.snakeyaml.Yaml;
  */
 class CalculatorDataPointsYamlTest {
 
+
+	private final static File file = new File("../jersey_junit/src/test/resources/ch08/params.yaml");
+
 	@ParameterizedTest
 	@MethodSource("getParams")
 	public void add(Fixture p) throws Exception {
@@ -24,8 +31,8 @@ class CalculatorDataPointsYamlTest {
 	}
 
 	@SuppressWarnings("unchecked")
-	static Fixture[] getParams() {
-		InputStream in = CalculatorDataPointsYamlTest.class.getResourceAsStream("params.yaml");
+	static Fixture[] getParams() throws FileNotFoundException {
+		InputStream in = new FileInputStream(file);
 		return ((List<Fixture>) new Yaml().load(in)).toArray(new Fixture[0]);
 	}
 
