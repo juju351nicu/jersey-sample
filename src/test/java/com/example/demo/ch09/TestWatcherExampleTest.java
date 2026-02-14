@@ -9,7 +9,12 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.api.extension.TestWatcher;
 
 /**
- * リスト9.14 ログを出力するTestWatcher
+ * リスト9.14 ログを出力するTestWatcher<br>
+ * TestWatcherクラスはテストの実行を監視するルールです。<br>
+ * テスト実行時の様々なタイミングで追加の処理を実行できます。<br>
+ * TestWactherはインターフェースであり必要なメソッドをオーバライドして利用します。<br>
+ * リスト9.14は各フェーズでログを出力するTestWatcherです。<br>
+ * ユニットテストはログなどを記録する必要がある場合や、ユニットテストの失敗時に通知が欲しいような場合に有効なルールです。<br>
  * 
  * @author shuji.w6e
  */
@@ -19,12 +24,12 @@ class TestWatcherExampleTest {
 	MyTestWatcher watcher = new MyTestWatcher();
 
 	@Test
-	public void 成功するテスト() throws Exception {
+	void 成功するテスト() throws Exception {
 	}
 
 	@Disabled("動作確認のためにはコメントアウトしてください")
 	@Test
-	public void 失敗するテスト() throws Exception {
+	void 失敗するテスト() throws Exception {
 		fail("NG");
 	}
 
