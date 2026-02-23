@@ -18,10 +18,9 @@ import org.junit.jupiter.api.extension.RegisterExtension;
  * リスト9.6では、Verifierルールを利用してテスト対象オブジェクトに対する事後条件を検証しています。<br>
  * この検証は、Afterアノテーションの付与された後処理のさらに後に実行されます。<br>
  * つまり、リスト9.6では、次の順番で実行されます。<br>
+ * JUnit5では、AfterEachCallbackインタフェースを使用して、各テストの終了後に検証を行う独自の拡張機能（Extension）を作成するのが最も一般的で強力な方法です。<br>
  * 
  * @author shuji.w6e JUnit 5でVerifierを実装する方法 (推奨)<br>
- *         JUnit5では、AfterEachCallbackインタフェースを使用して、各テストの終了後に検証を行う独自の拡張機能（Extension）を作成するのが最も一般的で強力な方法です。<br>
- * 
  */
 class VerifierExampleTest {
 	@RegisterExtension
