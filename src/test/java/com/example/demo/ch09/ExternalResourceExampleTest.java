@@ -1,6 +1,9 @@
 package com.example.demo.ch09;
 
-import com.github.tomakehurst.wiremock.junit5.WireMockTest;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 
 /**
  * リスト9.5 ExternalResourceの利用例<br>
@@ -13,11 +16,27 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest;
  * beforeメソッドには外部リソースの初期化処理を、afterメソッドには外部リソースの解放処理を定義してください。<br>
  * 初期化処理と解放処理の実行コストが大きく、クラス単位で実行できれば良いならばい、後術のClassRuleアノテーションを使うこともできます。<br>
  * なお、前述のTempolaryFolderクラスは、このExternalResourceクラスのサブクラスです。<br>
+ * ExternalResourceはBeforeEachCallbackとAfterEachCallbackに代替される。
  * 
  * @author shuji.w6e
  */
-//1. WireMockサーバーを自動起動
-@WireMockTest
-public class ExternalResourceExampleTest {
+class ExternalResourceExampleTest implements BeforeEachCallback, AfterEachCallback {
+	Server server;
 
+	@Override
+	public void beforeEach(ExtensionContext context) throws Exception {
+		// before() の処理
+		server = new Server(8080);
+		server.start();
+	}
+
+	@Override
+	public void afterEach(ExtensionContext context) throws Exception {
+		// after() の処理
+		server.shutdown();
+	}
+
+	@Test
+	void testCase() throws Exception {
+	}
 }
