@@ -1,3 +1,17 @@
 spring:
-  application:
-    name: jessy-sample
+  # DBに関する設定
+  datasource:
+    # JDBC URL
+    url: jdbc:h2:mem:testdb
+    # DBのログインユーザー名
+    username: sa
+    # DBのパスワード名
+    password: 
+    # JDBC ドライバーの完全修飾名
+    driverClassName: org.h2.Driver
+  sql:
+    init:
+      mode: always
+  h2:
+   console:
+    enabled: true

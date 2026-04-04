@@ -1,10 +1,9 @@
 package com.example.demo.ch12;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,27 +59,44 @@ import java.util.List;
  * この為、一部のカラムを除外して検証するなど工夫も必要です。<br>
  * リスト12.2 ユーザテーブルにアクセスするためのDAOクラス<br>
  * 
- * @author shuji.w6e
+ * UserDao: DBConnector経由でDB操作を行うDAO<br>
+ * <p>
+ * これによりDbUnit不要、テストでH2メモリDBも簡単に使用可能<br>
  */
 public class UserDao {
 
-	public List<String> getList() throws SQLException {
-		ResultSet rs = createStatement().executeQuery("SELECT name FROM users");
+	/**
+	 * ユーザー名リストを取得する
+	 *
+	 * @param con 接続済みConnection
+	 * @return ユーザー名リスト
+	 * @throws SQLException SQL実行時例外
+	 */
+	public List<String> getList(Connection con) throws SQLException {
+		String sql = "SELECT name FROM users ORDER BY id";
 		List<String> result = new LinkedList<>();
-		while (rs.next()) {
-			result.add(rs.getString(1));
+
+		try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				result.add(rs.getString("name"));
+			}
 		}
 		return result;
 	}
 
-	public void insert(String username) throws SQLException {
-		String sql = "INSERT INTO users(name) VALUES('" + username + "')";
-		createStatement().executeUpdate(sql);
-	}
-
-	private Statement createStatement() throws SQLException {
-		String url = "jdbc:h2:tcp://localhost/db;SCHEMA=ut";
-		Connection connection = DriverManager.getConnection(url, "sa", "");
-		return connection.createStatement();
+	/**
+	 * ユーザー名を追加する
+	 *
+	 * @param con      接続済みConnection
+	 * @param username 追加するユーザー名
+	 * @throws SQLException SQL実行時例外
+	 */
+	public void insert(Connection con, String username) throws SQLException {
+		String sql = "INSERT INTO users(name) VALUES(?)";
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setString(1, username);
+			ps.executeUpdate();
+		}
 	}
 }
